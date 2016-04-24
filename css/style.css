@@ -1,0 +1,11 @@
+button .material-icons{
+  margin-top: 7px;
+}
+
+.image{
+  height: 250px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app='myApp' lang='en'>
+  <head>
+    <title>eCommerce</title>
+    <meta charset="utf-8">
+    <meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link rel='stylesheet' href='node_modules\angular-material\angular-material.css'>
+    <link rel='stylesheet' href='node_modules\mdi\css\materialdesignicons.css' media='all' type='text/css'>
+    <link rel='stylesheet' href='css/style.css'>
+  </head>
+  <body ng-controller='mainCtrl' class='ng-cloak'>
+
+    <md-toolbar>
+
+
+      <div class="md-toolbar-tools">
+
+        <p><strong>Classifieds</strong></p>
+
+        <md-button ng-click='showSidenav()'>
+          <md-icon class='mdi mdi-plus-circle'></md-icon>
+        New Classified
+        </md-button>
+        <span flex></span>
+        <md-button aria-label='settings button'><md-icon class='mdi mdi-settings'></md-icon></md-button>
+      </div>
+    </md-toolbar>
+
+    <md-sidenav class='md-sidenamv-left md-whiteframe-z2' md-component-id='left'>
+      <md-toolbar>
+        <h1 class='md-toolbar-tools'>Add a feed</h1>
+      </md-toolbar>
+
+      <md-content layout-padding>
+        <form>
+          <md-input-container>
+            <label for="title">Title</label>
+            <input type="text" id="title" md-autofocus ng-model='item.title'>
+          </md-input-container>
+          <md-input-container>
+            <label for="Image url">Image url</label>
+            <input type="text" id="image" ng-model='item.image'>
+          </md-input-container>
+          <md-input-container>
+            <label for="Description">Description</label>
+            <textarea type="text" id="description" ng-model='item.description'></textarea>
+          </md-input-container>
+          <md-button ng-click='saveitem(item)' class="md-primary">Save</md-button>
+          <md-button class="md-primary">Edit</md-button>
+          <md-button ng-click='hideSidenav()' class="md-warn">Cancel</md-button>
+    
+        </form>
+      </md-content>
+    </md-sidenav>
+
+    <md-content class='md-padding' layout='row' layout-wrap n>
+      <md-card flex='30' ng-repeat='item in items'>
+        <img class='image' ng-src={{item.image}} alt="picture"/>
+        <md-card-content>
+          <div class='info'>
+            <h3 class='md-title'>{{item.title}}</h2>
+              <md-button ng-click='desc=true' ng-show='!desc' class='md-fab md-primary'>Show</md-button>
+              <md-button ng-click='desc=false' ng-show='desc' class='md-fab md-primary'>Hide</md-button>
+            <p ng-show='desc'>{{item.description}}</p>
+          </div>
+        </md-card-content>
+      </md-card>
+
+    </md-content>
+
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-material/angular-material.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>
