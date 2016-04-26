@@ -20,6 +20,14 @@ myApp.factory('items',function($http){
 
 myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog){
 
+  $scope.desc= false;
+  items.itemList().then(function(items){
+    $scope.items = items.data;
+    $scope.categories = getCategories($scope.items);
+  });
+
+
+
   $scope.showSidenav = function(){
     $scope.edit = false;
     $scope.item={};
@@ -67,6 +75,18 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     });
   }
 
+  function getCategories(items){
+    var categories = [];
+
+    angular.forEach($scope.items, function(item){
+      angular.forEach(item.categories, function(category){
+        categories.push(category);
+      });
+    });
+     return _.uniq(categories);
+
+  }
+
   $scope.showToast = function(message){
     $mdToast.show(
       $mdToast.simple()
@@ -76,9 +96,6 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     )
   }
 
-  $scope.desc= false;
-  items.itemList().then(function(items){
-    $scope.items = items.data;
-  });
+
 
 }]);

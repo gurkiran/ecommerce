@@ -7,7 +7,11 @@
       "name":"Gurkiran",
       "phone":"6124010224",
       "email":"gukiece@gmail.com"
-    }
+    },
+    "categories":[
+      "vehicles",
+      "Electronics"
+    ]
 
   },
   {
@@ -18,7 +22,11 @@
       "name":"Gurkiran",
       "phone":"6124010224",
       "email":"gukiece@gmail.com"
-    }
+    },
+    "categories":[
+      "Electronics",
+      "Home"
+    ]
 
   },
   {
@@ -29,7 +37,11 @@
       "name":"Gurkiran",
       "phone":"6124010224",
       "email":"gukiece@gmail.com"
-    }
+    },
+    "categories":[
+      "Home",
+      "Furniture"
+    ]
 
   }
 
