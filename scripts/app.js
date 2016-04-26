@@ -18,35 +18,67 @@ myApp.factory('items',function($http){
   }
 });
 
-myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast', function($scope,$http,items,$mdSidenav,$mdToast){
+myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog){
 
   $scope.showSidenav = function(){
+    $scope.edit = false;
+    $scope.item={};
     $mdSidenav('left').open();
   }
   $scope.hideSidenav = function(){
+
     $mdSidenav('left').close();
   }
 
   $scope.saveitem = function(item){
-    console.log(item);
     if(item){
       $scope.items.push(item);
       $scope.item={};
       $scope.hideSidenav();
-      $mdToast.show(
-        $mdToast.simple()
-          .content("Item saved !")
-          .position('top, right')
-          .hideDelay(3000)
-      )
-    }
+      $scope.showToast("Item saved !");
 
+    }
+  }
+  $scope.editItem = function(item){
+    $scope.edit= true;
+    $mdSidenav('left').open();
+    $scope.item= item;
+  }
+
+  $scope.saveEdited = function(){
+    $scope.edit = false;
+    $scope.hideSidenav();
+    $scope.item={};
+    $scope.showToast('Item edited !');
+
+  }
+
+  $scope.deleteItem = function(event,item){
+    var confirm = $mdDialog.confirm()
+    .title("Are you sure you want to delete "+item.title)
+    .ok('Yes')
+    .cancel('No')
+    .targetEvent(event);
+    $mdDialog.show(confirm).then(function(){
+      var index = $scope.items.indexOf(item);
+      $scope.items.splice(index,1);
+      $scope.showToast('Item deleted !');
+    }, function(){
+    });
+  }
+
+  $scope.showToast = function(message){
+    $mdToast.show(
+      $mdToast.simple()
+        .content(message)
+        .position('top, right')
+        .hideDelay(3000)
+    )
   }
 
   $scope.desc= false;
   items.itemList().then(function(items){
     $scope.items = items.data;
-    console.log(items);
   });
 
 }]);
