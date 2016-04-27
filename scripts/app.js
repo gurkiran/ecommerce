@@ -40,6 +40,10 @@ myApp.factory('items',function($http){
 
 myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog','$state', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog,$state){
 
+  $scope.refresh = function(){
+    $state.reload();
+  }
+
   $scope.desc= false;
   items.itemList().then(function(items){
     $scope.items = items.data;
