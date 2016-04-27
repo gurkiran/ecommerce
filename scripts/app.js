@@ -1,11 +1,23 @@
-var myApp = angular.module('myApp',['ngMaterial']);
+var myApp = angular.module('myApp',['ngMaterial','ui.router']);
 
-myApp.config(function($mdThemingProvider){
+myApp.config(function($mdThemingProvider,$stateProvider){
 
   $mdThemingProvider
     .theme('default')
     .primaryPalette('purple')
     .accentPalette('pink');
+
+  $stateProvider
+    .state('items',{
+      url:'/items',
+      templateUrl:'components/items.html',
+      controller:'mainCtrl'
+    })
+    .state('items.new',{
+      url:'/new',
+      templateUrl:'components/new.html',
+      controller:'newCtrl'
+    });
 });
 
 myApp.factory('items',function($http){
@@ -18,7 +30,7 @@ myApp.factory('items',function($http){
   }
 });
 
-myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog){
+myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog','$state', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog,$state){
 
   $scope.desc= false;
   items.itemList().then(function(items){
@@ -26,12 +38,11 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     $scope.categories = getCategories($scope.items);
   });
 
-
-
   $scope.showSidenav = function(){
     $scope.edit = false;
     $scope.item={};
-    $mdSidenav('left').open();
+    // $mdSidenav('left').open();
+    $state.go('items.new');
   }
   $scope.hideSidenav = function(){
 
@@ -98,6 +109,27 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     )
   }
 
+}]);
 
+myApp.controller('newCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog','$state','$timeout', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog,$state,$timeout){
+
+
+  $timeout(function () {
+      $mdSidenav('left').open();
+  });
+
+  $scope.$watch('sidenavopen', function(value){
+    if (value === false){
+      $mdSidenav('left')
+      .close()
+      .then(function(){
+        $state.go('items');
+      });
+    }
+  });
+
+  $scope.hideSidenav = function(){
+    $scope.sidenavopen = false;
+  }
 
 }]);

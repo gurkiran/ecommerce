@@ -8,94 +8,15 @@
     <link rel='stylesheet' href='node_modules\mdi\css\materialdesignicons.css' media='all' type='text/css'>
     <link rel='stylesheet' href='css/style.css'>
   </head>
-  <body ng-controller='mainCtrl' class='ng-cloak'>
+  <body class='ng-cloak'>
 
-    <md-toolbar>
-
-
-      <div class="md-toolbar-tools">
-
-          <p><strong>Classifieds</strong></p>
-          <md-button ng-click='showSidenav()'>
-            <md-icon class='mdi mdi-plus-circle'></md-icon>
-          New Classified
-          </md-button>
-          <md-button ng-click='showFilter=true'>
-            <md-icon class='mdi mdi-magnify'></md-icon>
-          Filter Search
-          </md-button>
-          <span flex></span>
-          <md-button aria-label='settings button'><md-icon class='mdi mdi-settings'></md-icon></md-button>
-      </div>
-    </md-toolbar>
-
-    <div class="filters" layout='row' layout-align='center center' ng-show='showFilter'>
-      <md-input-container>
-        <label>Search for items</label>
-        <input type='text' ng-model='query'>
-      </md-input-container>
-      <md-input-container>
-        <label>Category</label>
-        <md-select ng-model='category'>
-          <md-option ng-repeat='category in categories' value='{{ category }}'>{{ category }}</md-option>
-        </md-select>
-      </md-input-container>
-      <md-input-container>
-        <md-button ng-click='query=""; category=""'>Clear</md-button>
-      </md-input-container>
-    </div>
-
-
-    <md-sidenav class='md-sidenamv-left md-whiteframe-z2' md-component-id='left'>
-      <md-toolbar>
-        <h1 class='md-toolbar-tools'>Add a feed</h1>
-      </md-toolbar>
-
-      <md-content layout-padding>
-        <form>
-          <md-input-container>
-            <label for="title">Title</label>
-            <input type="text" id="title" md-autofocus ng-model='item.title'>
-          </md-input-container>
-          <md-input-container>
-            <label for="Image url">Image url</label>
-            <input type="text" id="image" ng-model='item.image'>
-          </md-input-container>
-          <md-input-container>
-            <label for="Description">Description</label>
-            <textarea type="text" id="description" ng-model='item.description'></textarea>
-          </md-input-container>
-          <md-button ng-click='saveitem(item)' ng-hide='edit' class="md-primary">Save</md-button>
-          <md-button class="md-primary" ng-click='saveEdited()' ng-show='edit'>Save Edit</md-button>
-          <md-button ng-click='hideSidenav()' class="md-warn">Cancel</md-button>
-        </form>
-      </md-content>
-    </md-sidenav>
-
-    <md-content class='md-padding' layout='row' layout-wrap n>
-      <md-card flex='30' ng-repeat='item in items | filter:query | filter:category' class='items'>
-        <img class='image' ng-src={{item.image}} alt="picture"/>
-        <md-card-content>
-          <div class='info'>
-            <h3 class='md-title'>{{item.title}}</h2>
-              <md-button ng-click='desc=true;con=false' ng-show='!desc' class='md-raised md-primary'>Details</md-button>
-              <md-button ng-click='desc=false' ng-show='desc' class='md-raised md-primary'>Hide</md-button>
-              <md-button ng-click='con=true;desc=false' ng-show='!con' class='md-raised md-primary'>Contact</md-button>
-              <md-button ng-click='con=false' ng-show='con' class='md-raised md-primary'>Hide</md-button>
-              <md-button ng-click='editItem(item)' class='md-raised'>Edit</md-button>
-              <md-button ng-click='deleteItem($event,item)' class='md-warn'>Delete</md-button>
-            <p ng-show='desc'>{{item.description}}</p>
-            <p ng-show='con'><md-icon class='mdi mdi-human'></md-icon>{{item.contact.name}}<br><md-icon class='mdi mdi-cellphone'></md-icon>{{item.contact.phone}}<br><md-icon class='mdi mdi-email'></md-icon>{{item.contact.email}}</p>
-          </div>
-        </md-card-content>
-      </md-card>
-
-    </md-content>
+  <ui-view></ui-view>
 
     <script src="node_modules/angular/angular.js"></script>
     <script src="node_modules/angular-material/angular-material.js"></script>
     <script src="node_modules/angular-aria/angular-aria.js"></script>
     <script src="node_modules/angular-animate/angular-animate.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
     <script src="scripts/app.js"></script>
   </body>

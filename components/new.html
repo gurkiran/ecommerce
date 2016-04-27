@@ -1,0 +1,25 @@
+<md-sidenav class='md-sidenamv-left md-whiteframe-z2' md-component-id='left' md-is-open='sidenavopen'>
+  <md-toolbar>
+    <h1 class='md-toolbar-tools'>Add a feed</h1>
+  </md-toolbar>
+
+  <md-content layout-padding>
+    <form>
+      <md-input-container>
+        <label for="title">Title</label>
+        <input type="text" id="title" md-autofocus ng-model='item.title'>
+      </md-input-container>
+      <md-input-container>
+        <label for="Image url">Image url</label>
+        <input type="text" id="image" ng-model='item.image'>
+      </md-input-container>
+      <md-input-container>
+        <label for="Description">Description</label>
+        <textarea type="text" id="description" ng-model='item.description'></textarea>
+      </md-input-container>
+      <md-button ng-click='saveitem(item)' ng-hide='edit' class="md-primary">Save</md-button>
+      <md-button class="md-primary" ng-click='saveEdited()' ng-show='edit'>Save Edit</md-button>
+      <md-button ng-click='hideSidenav()' class="md-warn">Cancel</md-button>
+    </form>
+  </md-content>
+</md-sidenav>
