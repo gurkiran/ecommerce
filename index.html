@@ -40,6 +40,9 @@
           <md-option ng-repeat='category in categories' value='{{ category }}'>{{ category }}</md-option>
         </md-select>
       </md-input-container>
+      <md-input-container>
+        <md-button ng-click='query=""; category=""'>Clear</md-button>
+      </md-input-container>
     </div>
 
 
@@ -70,7 +73,7 @@
     </md-sidenav>
 
     <md-content class='md-padding' layout='row' layout-wrap n>
-      <md-card flex='30' ng-repeat='item in items | filter:query | filter:category'>
+      <md-card flex='30' ng-repeat='item in items | filter:query | filter:category' class='items'>
         <img class='image' ng-src={{item.image}} alt="picture"/>
         <md-card-content>
           <div class='info'>

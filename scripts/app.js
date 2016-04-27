@@ -87,6 +87,8 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
 
   }
 
+
+
   $scope.showToast = function(message){
     $mdToast.show(
       $mdToast.simple()
