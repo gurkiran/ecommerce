@@ -17,6 +17,14 @@ myApp.config(function($mdThemingProvider,$stateProvider){
       url:'/new',
       templateUrl:'components/new.html',
       controller:'newCtrl'
+    })
+    .state('items.edit',{
+      url:'/edit/:id',
+      templateUrl:'components/editItem.html',
+      controller:'editCtrl',
+      params:{
+        item:null
+      }
     });
 });
 
@@ -60,8 +68,14 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
   }
   $scope.editItem = function(item){
     $scope.edit= true;
-    $mdSidenav('left').open();
     $scope.item= item;
+    // $mdSidenav('left').open();
+    $state.go('items.edit',{
+      id:item.id,
+      item:item
+    });
+
+
   }
 
   $scope.saveEdited = function(){
@@ -98,8 +112,6 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
 
   }
 
-
-
   $scope.showToast = function(message){
     $mdToast.show(
       $mdToast.simple()
@@ -131,5 +143,31 @@ myApp.controller('newCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$m
   $scope.hideSidenav = function(){
     $scope.sidenavopen = false;
   }
+
+}]);
+
+myApp.controller('editCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog','$state','$timeout', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog,$state,$timeout){
+
+  $timeout(function () {
+      $mdSidenav('left').open();
+  });
+  $scope.$watch('sidenavopen', function(value){
+    if (value === false){
+      $mdSidenav('left')
+      .close()
+      .then(function(){
+        $state.go('items');
+      });
+    }
+  });
+
+  $scope.hideSidenav = function(){
+    $scope.sidenavopen = false;
+  }
+
+  $scope.aiwen = function(){
+    console.log('this works');
+  }
+
 
 }]);
