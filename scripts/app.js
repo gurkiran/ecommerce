@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',['ngMaterial','ui.router']);
+var myApp = angular.module('myApp',['ngMaterial','ui.router','firebase']);
 
 myApp.config(function($mdThemingProvider,$stateProvider){
 
@@ -28,13 +28,11 @@ myApp.config(function($mdThemingProvider,$stateProvider){
     });
 });
 
-myApp.factory('items',function($http){
+myApp.factory('items',function($http, $firebaseArray){
 
-  function itemList(){
-    return $http.get('../items.json');
-  }
+  var ref= new Firebase('https://gurkiran.firebaseio.com/');
   return {
-    itemList : itemList
+    ref : $firebaseArray(ref)
   }
 });
 
@@ -45,10 +43,16 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
   }
 
   $scope.desc= false;
-  items.itemList().then(function(items){
-    $scope.items = items.data;
-    $scope.categories = getCategories($scope.items);
+  // items.itemList().then(function(items){
+  //   $scope.items = items.data;
+  //   $scope.categories = getCategories($scope.items);
+  // });
+
+  $scope.items = items.ref;
+  $scope.items.$loaded().then(function(items){
+      $scope.categories = getCategories(items);
   });
+
 
   $scope.showSidenav = function(){
     $scope.edit = false;
