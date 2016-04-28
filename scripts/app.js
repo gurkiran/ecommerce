@@ -177,3 +177,11 @@ myApp.controller('editCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
 
 
 }]);
+
+
+myApp.directive('itemList', function(){
+  return {
+    templateUrl: 'directive/item-list.html',
+    scope : true
+  }
+});

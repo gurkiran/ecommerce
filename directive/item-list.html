@@ -1,0 +1,16 @@
+<md-card flex='30' ng-repeat='item in items | filter:query | filter:category' class='items'>
+  <img class='image' ng-src={{item.image}} alt="picture"/>
+  <md-card-content>
+    <div class='info'>
+      <h3 class='md-title'>{{item.title}}</h2>
+        <md-button ng-click='desc=true;con=false' ng-show='!desc' class='md-raised md-primary'>Details</md-button>
+        <md-button ng-click='desc=false' ng-show='desc' class='md-raised md-primary'>Hide</md-button>
+        <md-button ng-click='con=true;desc=false' ng-show='!con' class='md-raised md-primary'>Contact</md-button>
+        <md-button ng-click='con=false' ng-show='con' class='md-raised md-primary'>Hide</md-button>
+        <md-button ng-click='editItem(item)' class='md-raised'>Edit</md-button>
+        <md-button ng-click='deleteItem($event,item)' class='md-warn'>Delete</md-button>
+      <p ng-show='desc'>{{item.description}}</p>
+      <p ng-show='con'><md-icon class='mdi mdi-human'></md-icon>{{item.contact.name}}<br><md-icon class='mdi mdi-cellphone'></md-icon>{{item.contact.phone}}<br><md-icon class='mdi mdi-email'></md-icon>{{item.contact.email}}</p>
+    </div>
+  </md-card-content>
+</md-card>
