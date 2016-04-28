@@ -39,7 +39,7 @@ myApp.factory('items',function($http, $firebaseArray){
 myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$mdDialog','$state', function($scope,$http,items,$mdSidenav,$mdToast,$mdDialog,$state){
 
   $scope.refresh = function(){
-    $state.reload();
+    location.reload();
   }
 
   $scope.desc= false;
@@ -67,7 +67,7 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
 
   $scope.saveitem = function(item){
     if(item){
-      $scope.items.push(item);
+      $scope.items.$add(item);
       $scope.item={};
       $scope.hideSidenav();
       $scope.showToast("Item saved !");
@@ -79,19 +79,20 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     $scope.item= item;
     // $mdSidenav('left').open();
     $state.go('items.edit',{
-      id:item.id,
-      item:item
+      id:item.$id,
+      // item:item
     });
 
 
   }
 
   $scope.saveEdited = function(){
-    $scope.edit = false;
-    $scope.hideSidenav();
-    $scope.item={};
-    $scope.showToast('Item edited !');
-
+    $scope.items.$save($scope.item).then(function(){
+      $scope.edit = false;
+      $scope.hideSidenav();
+      $scope.item={};
+      $scope.showToast('Item edited !');
+    });
   }
 
   $scope.deleteItem = function(event,item){
@@ -101,8 +102,7 @@ myApp.controller('mainCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     .cancel('No')
     .targetEvent(event);
     $mdDialog.show(confirm).then(function(){
-      var index = $scope.items.indexOf(item);
-      $scope.items.splice(index,1);
+      $scope.items.$remove(item);
       $scope.showToast('Item deleted !');
     }, function(){
     });
@@ -173,9 +173,7 @@ myApp.controller('editCtrl',['$scope','$http','items','$mdSidenav','$mdToast','$
     $scope.sidenavopen = false;
   }
 
-  $scope.aiwen = function(){
-    console.log('this works');
-  }
+  $scope.item = $scope.items.$getRecord($state.params.id);
 
 
 }]);
